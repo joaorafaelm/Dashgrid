@@ -1,0 +1,20 @@
+.size-controller{
+    padding: 5px;
+    margin: 5px;
+    font-size: 10px;
+    text-decoration: none;
+    color: rgba(255,255,255,.9);
+    background: rgba(0,0,0,.1);
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+    .rounded(4px);
+    
+    &:before{
+        content:'EXPAND';
+    }
+    
+    &.collapse:before{
+        content: 'COLLAPSE';
+    }
+}

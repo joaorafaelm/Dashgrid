@@ -1,0 +1,17 @@
+/*/Work around for devices less than 768px/*/
+@media screen and (max-width: 767px) {
+    .gridster{
+        & > *{
+            padding: 0;
+            width: 100% !important;
+            
+        }
+        & .gs-w{
+            list-style: none;
+            clear: both !important;
+            position: static !important;
+            width: 100%;
+            margin: 20px auto;
+        }
+    }
+}

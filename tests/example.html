@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="/build/css/dashgrid.css" media="screen" title="no title" charset="utf-8">
+        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="utf-8"></script>
+        
+        <script src="/lib/gridster/jquery.gridster.js" charset="utf-8"></script>
+        <link rel="stylesheet" href="/lib/gridster/jquery.gridster.css" media="screen" title="no title" charset="utf-8">
+        
+        <script src="/src/js/Dashgrid.Grid.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <a id="add" href="#">add widget</a>
+        <a id="del" href="#">del widget</a>
+        <div class="gridster">
+            <ul>
+            </ul>
+        </div>
+    </body>
+    <script type="text/javascript">
+        (function (gridster) {
+            
+            // instantiate dashgrid
+            dashgrid = new Dashgrid.Grid({
+                // selector : '.gridster > ul',
+                // controllers: { active: false},
+                resize : true
+            });
+            
+            // add new widget to grid
+            $('#add').click(function(){
+                dashgrid.addWidget({
+                    'text': 'test'
+                });
+            })
+            // remove widget
+            $('#del').click(function(){
+                var widget = $(".gridster li:eq(" + Math.floor(Math.random()*4) + ")");
+                dashgrid.removeWidget(widget);
+                
+            });
+
+        }($));
+    </script>
+</html>

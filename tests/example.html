@@ -5,7 +5,7 @@
         <title></title>
         <link rel="stylesheet" href="/build/css/dashgrid.min.css" media="screen" title="no title" charset="utf-8">
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="utf-8"></script>
-        
+
         <script src="/lib/gridster/jquery.gridster.js" charset="utf-8"></script>
         <script src="/build/js/dashgrid.js" charset="utf-8"></script>
 
@@ -19,25 +19,29 @@
     </body>
     <script type="text/javascript">
         (function (gridster) {
-            
+
             // instantiate dashgrid
             dashgrid = new Dashgrid.Grid({
-                selector : '.gridster > div',
+                // selector : '.gridster > div',
                 // controllers: { active: false},
                 resize : true
             });
-            
+
+            window.value = 1;
+
             // add new widget to grid
             $('#add').click(function(){
                 dashgrid.addWidget({
-                    'text': 'test'
+                    'id': window.value,
+                    'text': window.value
                 });
+                window.value += 1;
             })
             // remove widget
             $('#del').click(function(){
                 var widget = $(".gridster li:eq(" + Math.floor(Math.random()*4) + ")");
                 dashgrid.removeWidget(widget);
-                
+
             });
 
         }($));

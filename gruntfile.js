@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         watch: {
             css: {
                 files: ['src/less/*.less', 'src/js/*.js'],
-                tasks: ['less', 'concat']
+                tasks: ['less', 'concat', 'jshint']
             }
         },
         jshint: {
@@ -23,14 +23,14 @@ module.exports = function(grunt) {
                 src: ['src/js/*.js'],
                 dest: 'build/js/dashgrid.js'
             }
-        }   
+        }
     });
-    
+
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    
+
     grunt.registerTask('default', ['jshint', 'less', 'concat']);
 
 };

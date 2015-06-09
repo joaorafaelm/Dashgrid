@@ -48,8 +48,7 @@
             $('#add').click(function(){
                 dashgrid.addWidget({
                     'id': window.value,
-                    'text': window.value,
-                    'style': 'background:tomato'
+                    'text': window.value
                 });
                 window.value += 1;
 
@@ -57,7 +56,8 @@
 
             // remove widget
             $('#del').click(function(){
-                var widget = $(".gridster li:eq(" + Math.floor(Math.random()*4) + ")");
+                window.value -= 1;
+                var widget = $(".gridster #" + window.value);
                 dashgrid.removeWidget(widget);
             });
 

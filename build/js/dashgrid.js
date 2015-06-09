@@ -61,13 +61,14 @@
             serialize_params: function($w, wgd) {
                 return {
                     'id': parseInt($($w).attr('id')),
-                    'col': wgd.col,
-                    'row': wgd.row,
-                    'sizex': wgd.size_x,
-                    'sizey': wgd.size_y
+                    'data-col': wgd.col,
+                    'data-row': wgd.row,
+                    'data-sizex': wgd.size_x,
+                    'data-sizey': wgd.size_y
                 };
             },
             draggable:{
+                limit: true,
                 stop: $.proxy(this.stateCallback.fire, this)
             },
             resize: {
@@ -120,10 +121,7 @@
             customProperties = this.retrieveState(customProperties);
         }
 
-        var properties = {
-            col : 'auto',
-            row : 'auto'
-        };
+        var properties = {};
 
         $.extend(true, properties, customProperties);
 
@@ -134,13 +132,28 @@
                  widget
         ;
 
-        this.gridster.add_widget(
-            widget,
-            properties.sizex || this.Opts.widget.min_size.x,
-            properties.sizey || this.Opts.widget.min_size.y,
-            properties.col,
-            properties.row
-        );
+        if(properties['data-row'] && properties['data-col']){
+            this.gridster.add_widget(
+                widget,
+                properties['data-sizex'] || this.Opts.widget.min_size.x,
+                properties['data-sizey'] || this.Opts.widget.min_size.y,
+                properties['data-col'],
+                properties['data-row']
+            );
+
+            this._onToggleSizeWidget({
+                    type : 'mouseup',
+                    data : widget
+            });
+
+        }else{
+            this.gridster.add_widget(
+                widget,
+                properties['data-sizex'] || this.Opts.widget.min_size.x,
+                properties['data-sizey'] || this.Opts.widget.min_size.y
+            );
+        }
+
 
         if(!properties.isStored){
             this._onSaveWidgetState();
@@ -215,8 +228,6 @@
                 JSON.stringify(this.gridster.serialize())
             );
         }
-
-
     };
 
 
@@ -231,11 +242,13 @@
 
         if(typeof(Storage) !== "undefined") {
             var dataStored = JSON.parse(localStorage.getItem("gridState"));
-            for (var i = 0; i < dataStored.length; i++) {
-                if(dataStored[i].id == element.id){
-                    $.extend(true, element, dataStored[i]);
-                    element.isStored = true;
-                    break;
+            if(dataStored !== null){
+                for (var i = 0; i < dataStored.length; i++) {
+                    if(dataStored[i].id == element.id){
+                        $.extend(true, element, dataStored[i]);
+                        element.isStored = true;
+                        break;
+                    }
                 }
             }
         }

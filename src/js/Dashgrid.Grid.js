@@ -143,7 +143,6 @@
         );
 
         if(!properties.isStored){
-            console.log(properties);
             this._onSaveWidgetState();
         }
 
@@ -183,12 +182,12 @@
         //no need to resize again. if widget was manually resized.
         if(context.type == 'mouseup'){
             //change text
-            $(button).toggleClass('collapse', is_expanded);
+            $(button).toggleClass('sz-collapse', is_expanded);
             return true;
         }
 
         //toggle button text
-        $(button).toggleClass('collapse');
+        $(button).toggleClass('sz-collapse');
         this.gridster.resize_widget(
             widget ,
             //if expanded, set x equal to minimum, else, x maximum.

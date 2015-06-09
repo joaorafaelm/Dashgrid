@@ -27,7 +27,7 @@ body {
 .size-controller:before {
   content: 'EXPAND';
 }
-.size-controller.collapse:before {
+.size-controller.sz-collapse:before {
   content: 'COLLAPSE';
 }
 .gridster {

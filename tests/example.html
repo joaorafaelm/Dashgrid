@@ -13,18 +13,33 @@
     <body>
         <a id="add" href="#">add widget</a>
         <a id="del" href="#">del widget</a>
-        <div class="gridster">
-            <div></div>
+        <a id="storage" href="#">clear localStorage</a>
+        <div id="responsive" style="width:100%">
+            <div class="gridster">
+                <div></div>
+            </div>
         </div>
     </body>
     <script type="text/javascript">
         (function (gridster) {
 
+
+            var grid_width = function(){
+                return parseInt($('#responsive').width()/2) - 30;
+            };
+
+
             // instantiate dashgrid
             dashgrid = new Dashgrid.Grid({
                 // selector : '.gridster > div',
                 // controllers: { active: false},
-                resize : true
+                resize : true,
+                widget:{
+                    dimensions:[
+                        grid_width(),
+                        100
+                    ]
+                }
             });
 
             window.value = 1;
@@ -37,12 +52,26 @@
                     'style': 'background:tomato'
                 });
                 window.value += 1;
+
             });
 
             // remove widget
             $('#del').click(function(){
                 var widget = $(".gridster li:eq(" + Math.floor(Math.random()*4) + ")");
                 dashgrid.removeWidget(widget);
+            });
+
+            $('#storage').click(function(){
+                localStorage.clear();
+            });
+
+            $( window ).resize(function() {
+                dashgrid.gridster.resize_widget_dimensions({
+                    widget_base_dimensions:[
+                        grid_width(),
+                        100
+                    ]
+                });
             });
 
         }($));

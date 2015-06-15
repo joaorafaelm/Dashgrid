@@ -4,7 +4,7 @@ module.exports = function(grunt) {
             development: {
                 options: {
                     paths: ["src/less"],
-                    // cleancss: true // minification
+                    cleancss: true // minification
                 },
                 files: {"build/css/dashgrid.css": "src/less/main.less"}
             }

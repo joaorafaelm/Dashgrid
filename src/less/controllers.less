@@ -1,20 +1,44 @@
-.size-controller{
-    padding: 5px;
-    margin: 5px;
-    font-size: 10px;
-    text-decoration: none;
-    color: rgba(255,255,255,.9);
-    background: rgba(0,0,0,.1);
-    font-weight: bold;
-    position: absolute;
-    right: 0;
-    .rounded(4px);
+.handle-controllers{
+    .disable-selection();
+    position:absolute;
+    top:0;
+    width:100%;
+    height: auto;
+    background: @wrapBarBackground;
 
-    &:before{
-        content:'EXPAND';
+    & .size-controller{
+        float: right;
+        padding: 5px;
+        margin: 5px;
+        font-size: 10px;
+        text-decoration: none;
+        color: @sizeControllerColor;
+        background: @sizeControllerBg;
+        font-weight: bold;
+        .rounded(4px);
+
+        &:before{
+            content:'EXPANDIR';
+        }
+
+        &.sz-collapse:before{
+            content: 'MINIMIZAR';
+        }
     }
 
-    &.sz-collapse:before{
-        content: 'COLLAPSE';
+    & .close-controller{
+        float: right;
+        padding: 5px;
+        margin: 5px;
+        font-size: 10px;
+        text-decoration: none;
+        color: @sizeControllerColor;
+        background: @sizeControllerBg;
+        font-weight: bold;
+        .rounded(4px);
+
+        &:before{
+            content:'\00d7'; // &times;
+        }
     }
 }

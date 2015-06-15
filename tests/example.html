@@ -3,17 +3,26 @@
     <head>
         <meta charset="utf-8">
         <title></title>
-        <link rel="stylesheet" href="/build/css/dashgrid.css" media="screen" title="no title" charset="utf-8">
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="utf-8"></script>
+        <link rel="stylesheet" href="../build/css/dashgrid.css" media="screen" title="no title" charset="utf-8">
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="utf-8"></script>
 
-        <script src="/lib/gridster/jquery.gridster.js" charset="utf-8"></script>
-        <script src="/build/js/dashgrid.js" charset="utf-8"></script>
+        <script src="../lib/gridster/jquery.gridster.js" charset="utf-8"></script>
+        <script src="../build/js/dashgrid.js" charset="utf-8"></script>
 
     </head>
     <body>
         <a id="add" href="#">add widget</a>
         <a id="del" href="#">del widget</a>
         <a id="storage" href="#">clear localStorage</a>
+        <label class="select">
+            <select id="dashgrid-list" class="input-sm">
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+                <option value="3">4</option>
+                <option value="4">5</option>
+            </select> <i></i>
+        </label>
         <div id="responsive" style="width:100%">
             <div class="gridster">
                 <div></div>
@@ -23,17 +32,26 @@
     <script type="text/javascript">
         (function (gridster) {
 
-
             var grid_width = function(){
                 return parseInt($('#responsive').width()/2) - 30;
             };
 
-
             // instantiate dashgrid
             dashgrid = new Dashgrid.Grid({
                 // selector : '.gridster > div',
-                // controllers: { active: false},
-                resize : true,
+                controllers: {
+                    active: true,
+                    options:{
+                        resize:{
+                            active: true
+                        },
+                        close:{
+                            active: true
+                        }
+                    }
+
+                },
+                resize : false,
                 widget:{
                     dimensions:[
                         grid_width(),

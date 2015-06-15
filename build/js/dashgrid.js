@@ -16,7 +16,21 @@
             selector : ".gridster > div",
             controllers:{
                 active : true,
-                class  : 'size-controller'
+                handle : 'handle-controllers',
+                options:{
+                    resize :{
+                        active : true,
+                        class : 'size-controller',
+                        callback: this._onToggleSizeWidget
+                    },
+                    close:{
+                        active: true,
+                        class : 'close-controller',
+                        callback: this._onCloseWidget
+
+                    }
+                }
+
             },
             resize: true,
             min_cols: 2,
@@ -39,7 +53,6 @@
         // create callbacks
         this.stateCallback = $.Callbacks();
         this.stateCallback.add([
-            this._onToggleSizeWidget,
             this._onSaveWidgetState
         ]);
 
@@ -68,7 +81,7 @@
                 };
             },
             draggable:{
-                limit: true,
+                handle: '.' + this.Opts.controllers.handle,
                 stop: $.proxy(this.stateCallback.fire, this)
             },
             resize: {
@@ -98,12 +111,26 @@
     Dashgrid.Grid.prototype._createControllers = function (widget) {
         // console.log("_createControllers", widget);
 
+        var wrapControllers = $('<span/>',{
+            class: this.Opts.controllers.handle
+        });
+
+        // add all controllers in controllers.options
+        for(var i in this.Opts.controllers.options){
+            // console.log("Controllers", this.Opts.controllers.options[i]);
+
+            if(this.Opts.controllers.options[i].active){
+                wrapControllers = $(wrapControllers).prepend(
+                    $('<a/>', {
+                    'class': this.Opts.controllers.options[i].class
+                }).on('click', widget,
+                    $.proxy(this.Opts.controllers.options[i].callback, this)
+                ));
+            }
+        }
+
         /* expand/collapse controllers */
-        widget = $(widget).prepend(
-            $('<a/>', {
-                'class': this.Opts.controllers.class
-            }).on('click', widget, $.proxy(this.stateCallback.fire, this))
-        );
+        widget = $(widget).prepend(wrapControllers);
 
         return widget;
     };
@@ -167,6 +194,7 @@
      * @method removeWidget
      */
     Dashgrid.Grid.prototype.removeWidget = function (widget) {
+        // console.log("removeWidget", widget);
         this.gridster.remove_widget(widget);
         this._onSaveWidgetState();
     };
@@ -211,6 +239,25 @@
             this.Opts.widget.max_size.y
         );
 
+        this._onSaveWidgetState();
+    };
+
+    /**
+     * This method is triggered whenever the widget close button is clicked..
+     * And it is automatically binded to the controllers when they are created.
+     * @param {context | Object} Receives the event type
+     *        'click' (from controllers) or 'mouseup' (from manual resize).
+     * @method _onToggleSizeWidget
+     */
+    Dashgrid.Grid.prototype._onCloseWidget = function (context) {
+        // console.log("_onCloseWidget", context);
+        var widget = context.data ?
+                     context.data :
+                     $(context.target).closest(this.Opts.widget.selector);
+
+        //added hide to widget, so it wont delay hiding.
+        widget.hide();
+        this.removeWidget(widget);
     };
 
     /**
@@ -256,6 +303,35 @@
         return element;
     };
 
+
+
+}(window.Dashgrid = window.Dashgrid || {}, jQuery));
+
+(function(Dashgrid, $){
+    /*
+     * Método construtor da classe
+     * @param { opts | Object } Define permisões de acesso a modulos (Iluminação, Consumo).
+     * @method _contructor
+     */
+    Dashgrid.list = function(opts){
+
+        this.options = {
+            permissions:{
+                ip: false,
+                cm: false
+            },
+            selector : '#dashgrid-list'
+        };
+
+        $.extend(true, this.options, opts);
+
+        console.log("Permissions", this.options);
+    };
+
+
+    Dashgrid.list.prototype.init = function(){
+
+    };
 
 
 }(window.Dashgrid = window.Dashgrid || {}, jQuery));
